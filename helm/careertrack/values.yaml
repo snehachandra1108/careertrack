@@ -1,0 +1,35 @@
+
+nameOverride: ""
+fullnameOverride: ""
+
+backend:
+  replicaCount: 1
+  image:
+    repository: careertrack-backend
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    port: 8000
+
+frontend:
+  replicaCount: 1
+  image:
+    repository: careertrack-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    port: 80
+    nodePort: 30080
+
+postgres:
+  image:
+    repository: postgres
+    tag: "17-alpine"
+    pullPolicy: IfNotPresent
+  database: careertrack
+  username: careertrack_user
+  # Set this during installation using --set-string.
+  password: ""
+  storage: 1Gi
+  service:
+    port: 5432
