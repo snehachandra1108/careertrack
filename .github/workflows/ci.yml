@@ -15,6 +15,23 @@ jobs:
     name: Backend Tests
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: careertrack
+          POSTGRES_USER: careertrack_user
+          POSTGRES_PASSWORD: careertrack_local_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U careertrack_user -d careertrack"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql+psycopg://careertrack_user:careertrack_local_password@localhost:5432/careertrack
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
