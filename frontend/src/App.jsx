@@ -4,6 +4,8 @@ import "./App.css";
 
 const API = "/api";
 
+const today = () => new Date().toISOString().slice(0, 10);
+
 function App() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ function App() {
   const [form, setForm] = useState({
     company: "",
     role: "",
-    applied_date: new Date().toISOString().slice(0, 10),
+    applied_date: today(),
     status: "Applied",
     notes: "",
   });
@@ -52,7 +54,7 @@ function App() {
       setForm({
         company: "",
         role: "",
-        applied_date: new Date().toISOString().slice(0, 10),
+        applied_date: today(),
         status: "Applied",
         notes: "",
       });
