@@ -88,21 +88,9 @@ jobs:
       - name: Build frontend image
         run: docker build -f frontend/Dockerfile -t careertrack-frontend:ci ./frontend
       - name: Scan backend image with Trivy
-        uses: aquasecurity/trivy-action@v0.29.0
-        with:
-          image-ref: careertrack-backend:ci
-          format: table
-          exit-code: '0'
-          ignore-unfixed: true
-          vuln-type: os,library
-          severity: HIGH,CRITICAL
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --format table --exit-code 0 --ignore-unfixed --vuln-type os,library --severity HIGH,CRITICAL careertrack-backend:ci
 
       - name: Scan frontend image with Trivy
-        uses: aquasecurity/trivy-action@v0.29.0
-        with:
-          image-ref: careertrack-frontend:ci
-          format: table
-          exit-code: '0'
-          ignore-unfixed: true
-          vuln-type: os,library
-          severity: HIGH,CRITICAL
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --format table --exit-code 0 --ignore-unfixed --vuln-type os,library --severity HIGH,CRITICAL careertrack-frontend:ci
